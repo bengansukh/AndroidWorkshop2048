@@ -1,5 +1,3 @@
-package solution.bmp.a2048;
-
 import java.util.Random;
 
 /**
@@ -7,6 +5,33 @@ import java.util.Random;
  */
 
 public class Board {
+
+    public static void main(String [] args)
+    {
+        Board a = new Board(4);
+        Cell[][] board = a.getBoard();
+        board[0][1].value = 2;
+        board[0][2].value = 2;
+        for(int i = 0; i < 4; i++){
+            for (int j =0; j < 4; j++)
+            {
+                System.out.print(board[i][j].getValue() + " ");
+            }
+            System.out.println();
+        }
+
+        a.moveRight();
+        System.out.println("After move");
+        for(int i = 0; i < 4; i++){
+            for (int j =0; j < 4; j++)
+            {
+                System.out.print(board[i][j].getValue() + " ");
+            }
+            System.out.println();
+        }
+
+    }
+
     Cell[][] board;
     int score;
     int size;
@@ -46,33 +71,72 @@ public class Board {
     }
 
     public void moveRight(){
-        int moved = 0;
-        for( int j = 0; j < size; j++){
-            for(int i = 0; i < size; i++){
-                if(!swapCells(board[i][j], board[i][j+1]))
-                {
-                    moved++;
-                }
+        for( int i = 0; i < size; i++){
+            for(int j = size - 2; j >= 0; j--){
+                skipEmptyCellsRight(i, j);
             }
         }
-
-        if(moved == 0)
-            return;
-        moveRight();
     }
 
-    private boolean swapCells(Cell movingCell, Cell emptyCell)
+    private void skipEmptyCellsRight(int currentRow, int currentCol)
     {
-        if(emptyCell.getValue() != 0)
-            return false;
-        Cell temp = movingCell;
-        movingCell = emptyCell;
-        emptyCell = temp;
-        return true;
+        if(currentCol > size - 1)
+            return;
+        if(board[currentRow][currentCol + 1] != null && board[currentRow][currentCol + 1].getValue() == 0){
+            board[currentRow][currentCol + 1].value = board[currentRow][currentCol].value;
+            board[currentRow][currentCol].setZero();
+            skipEmptyCellsRight(currentRow, currentCol + 1);
+        }
+    }
+
+    private void mergeCells(Cell fromCell, Cell toCell)
+    {
+        if(fromCell.getValue() == toCell.getValue())
+            toCell.update(fromCell);
+        fromCell.setZero();
     }
     public Cell[][] getBoard(){
         return this.board;
     }
 
 }
+
+/**
+ * Created by mrybak834 on 2/18/17.
+ */
+
+class Cell {
+    int value;
+
+    Cell(){
+        value = 0;
+    }
+
+    int random(){
+        Random r = new Random();
+        int randNumber = r.nextInt(1);
+
+        if(randNumber == 0){
+            value = 2;
+            return 2;
+        }
+        else{
+            value = 4;
+            return 4;
+        }
+    }
+
+    void update (Cell c){
+        this.value = this.value + c.getValue();
+    }
+
+    int getValue(){
+        return value;
+    }
+
+    void setZero (){
+        this.value = 0;
+    }
+}
+
 
