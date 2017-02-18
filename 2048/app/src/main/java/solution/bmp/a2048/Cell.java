@@ -10,7 +10,7 @@ public class Cell {
     int value;
 
     Cell(){
-        value = 0;
+        this.value = 0;
     }
 
     int random(){
@@ -18,21 +18,22 @@ public class Cell {
         int randNumber = r.nextInt(1);
 
         if(randNumber == 0){
-            value = 2;
+            this.value = 2;
             return 2;
         }
         else{
-            value = 4;
+            this.value = 4;
             return 4;
         }
     }
 
-    void update (Cell c){
+    int update (Cell c){
         this.value = this.value + c.getValue();
+        return this.value;
     }
 
     int getValue(){
-        return value;
+        return this.value;
     }
 
     void setZero (){
