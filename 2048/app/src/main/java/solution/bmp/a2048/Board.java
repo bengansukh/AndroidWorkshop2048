@@ -1,9 +1,9 @@
 package solution.bmp.a2048;
+
+import java.util.Random;
 /**
  * Created by gansu on 2/18/2017.
  */
-
-import java.util.Random;
 
 public class Board {
 
@@ -82,13 +82,6 @@ public class Board {
             }
         }
     }
-
-    public void moveLeft(){
-        for( int i = 0; i < size; i++){
-            for(int j = 1; j < size; j++){
-                if(board[i][j].getValue() != 0)
-                    moveHelperAcross(i, j, -1);
-            }
         }
     }
 
@@ -108,46 +101,6 @@ public class Board {
                     moveHelperVertical(j, i, 1);
             }
         }
-    }
-
-
-    private void moveHelperAcross(int currentRow, int currentCol, int movecol)
-    {
-        while(((movecol == -1 && currentCol > 0) || (movecol ==1 && currentCol < size - 1)) && board[currentRow][currentCol + movecol].getValue() == 0 ){
-            board[currentRow][currentCol + movecol].value = board[currentRow][currentCol].getValue();
-            board[currentRow][currentCol].setZero();
-            currentCol += movecol;
-        }
-
-        if(currentCol < size - 1 && currentCol > 0)
-            if(board[currentRow][currentCol + movecol].getValue() == board[currentRow][currentCol].getValue()){
-                mergeCells(board[currentRow][currentCol], board[currentRow][currentCol + movecol]);
-            }
-
-    }
-
-    private void moveHelperVertical(int currentRow, int currentCol, int moverow)
-    {
-        while(((moverow == -1 && currentRow > 0) || (moverow ==1 && currentRow < size - 1)) && board[currentRow + moverow][currentCol].getValue() == 0 ){
-            board[currentRow + moverow][currentCol].value = board[currentRow][currentCol].getValue();
-            board[currentRow][currentCol].setZero();
-            currentRow += moverow;
-        }
-
-        if(currentRow < size - 1 && currentRow > 0)
-            if(board[currentRow + moverow][currentCol].getValue() == board[currentRow][currentCol].getValue()){
-                mergeCells(board[currentRow][currentCol], board[currentRow + moverow][currentCol]);
-            }
-
-    }
-    private void mergeCells(Cell fromCell, Cell toCell)
-    {
-        toCell.update(fromCell);
-        fromCell.setZero();
-        this.score += (toCell.getValue());
-    }
-    public Cell[][] getBoard(){
-        return this.board;
     }
 
 }
