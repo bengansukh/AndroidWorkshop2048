@@ -126,18 +126,26 @@ public class MainActivity extends AppCompatActivity {
                 float deltaY = y2 - y1;
                 if (deltaX > MIN_DISTANCE_L_R)
                 {
+                    board.moveRight();
+                    updateGUI();
                     Log.d("DEBUG", "left2right swipe " + deltaX);
                 }
                 else if (deltaX < MIN_DISTANCE_R_L)
                 {
+                    board.moveLeft();
+                    updateGUI();
                     Log.d("DEBUG", "right2left swipe" + deltaX);
                 }
                 else if (deltaY > MIN_DISTANCE_L_R)
                 {
+                    board.moveDown();
+                    updateGUI();
                     Log.d("DEBUG", "top2bottom swipe" + deltaY);
                 }
                 else if (deltaY < MIN_DISTANCE_R_L)
                 {
+                    board.moveUp();
+                    updateGUI();
                     Log.d("DEBUG", "bottom2top swipe" + deltaY);
                 }
                 break;

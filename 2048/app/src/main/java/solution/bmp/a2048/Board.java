@@ -1,44 +1,6 @@
 package solution.bmp.a2048;
-<<<<<<< HEAD
 
 import java.util.Random;
-
-=======
->>>>>>> c5c7151addb9333e909202fc997048f621378e22
-/**
- * Created by gansu on 2/18/2017.
- */
-
-<<<<<<< HEAD
-public class Board {
-
-
-    public static void main(String [] args)
-    {
-        Board a = new Board(4);
-        Cell[][] board = a.getBoard();
-        board[0][1].value = 2;
-        board[0][2].value = 2;
-        for(int i = 0; i < 4; i++){
-            for (int j =0; j < 4; j++)
-            {
-                System.out.print(board[i][j].getValue() + " ");
-            }
-            System.out.println();
-        }
-
-        a.moveRight();
-        System.out.println("After move");
-        for(int i = 0; i < 4; i++){
-            for (int j =0; j < 4; j++)
-            {
-                System.out.print(board[i][j].getValue() + " ");
-            }
-            System.out.println();
-        }
-=======
-import java.util.Random;
->>>>>>> c5c7151addb9333e909202fc997048f621378e22
 
 public class Board {
 
@@ -80,34 +42,17 @@ public class Board {
 
     }
 
-    public void moveLeft(){
-        for(int col = 1; col < size; col++) {
-            for (int row = 0; row < size; row++) {
-                if(board[row][col].getValue() != 0)
-                {
-                    if(board[row][col-1].getValue() == board[row][col].getValue()) {
-                        board[row][col - 1].update(board[row][col]);
-                        board[row][col].setZero();
-                    }
-                }
-            }
-        }
-    }
+    public void spawn(){
 
-    public void moveDown(){
-        for(int row = size-2; row <= 0; row--){
-            for(int col = 0; col < size; col++){
-                if(board[row][col].getValue() != 0)
-                {
-                    if(board[row][col].getValue() == board[row][col].getValue()) {
-                        board[row+1][col].update(board[row][col]);
-                        board[row][col].setZero();
-                    }
-                }
-            }
+        Random rand = new Random();
+        int i = rand.nextInt(size);
+        int j = rand.nextInt(size);
+        while(board[i][j].getValue() != 0){
+            i = rand.nextInt(size);
+            j = rand.nextInt(size);
         }
+        board[i][j].random();
     }
-
 
     public void moveRight(){
         for( int i = 0; i < size; i++){
@@ -116,31 +61,17 @@ public class Board {
                     moveHelperAcross(i, j, 1);
             }
         }
+        spawn();
     }
 
-<<<<<<< HEAD
-    public int getSize()
-    {
-        return this.size;
-    }
-
-    private void skipEmptyCellsRight(int currentRow, int currentCol)
-    {
-        if(currentCol > size - 1)
-            return;
-        if(board[currentRow][currentCol + 1] != null && board[currentRow][currentCol + 1].getValue() == 0){
-            board[currentRow][currentCol + 1].value = board[currentRow][currentCol].value;
-            board[currentRow][currentCol].setZero();
-            skipEmptyCellsRight(currentRow, currentCol + 1);
-=======
     public void moveLeft(){
         for( int i = 0; i < size; i++){
             for(int j = 1; j < size; j++){
                 if(board[i][j].getValue() != 0)
                     moveHelperAcross(i, j, -1);
             }
->>>>>>> c5c7151addb9333e909202fc997048f621378e22
         }
+        spawn();
     }
 
     public void moveUp(){
@@ -150,6 +81,7 @@ public class Board {
                     moveHelperVertical(j, i, -1);
             }
         }
+        spawn();
     }
 
     public void moveDown(){
@@ -159,11 +91,15 @@ public class Board {
                     moveHelperVertical(j, i, 1);
             }
         }
+        spawn();
+    }
+
+    public int getSize()
+    {
+        return size;
     }
 
 
-<<<<<<< HEAD
-=======
     private void moveHelperAcross(int currentRow, int currentCol, int movecol)
     {
         while(((movecol == -1 && currentCol > 0) || (movecol ==1 && currentCol < size - 1)) && board[currentRow][currentCol + movecol].getValue() == 0 ){
@@ -202,6 +138,5 @@ public class Board {
     public Cell[][] getBoard(){
         return this.board;
     }
->>>>>>> c5c7151addb9333e909202fc997048f621378e22
 
 }
