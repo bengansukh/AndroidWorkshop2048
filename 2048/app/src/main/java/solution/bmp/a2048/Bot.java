@@ -26,4 +26,8 @@ public class Bot {
         }
 
     }
+
+    void nextSmartMove(){
+
+    }
 }

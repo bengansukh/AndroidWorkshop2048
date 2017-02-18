@@ -1,3 +1,5 @@
+package solution.bmp.a2048;
+
 import java.util.Random;
 
 /**
@@ -69,6 +71,35 @@ public class Board {
     public void updateScore(){
 
     }
+
+    public void moveLeft(){
+        for(int col = 1; col < size; col++) {
+            for (int row = 0; row < size; row++) {
+                if(board[row][col].getValue() != 0)
+                {
+                    if(board[row][col-1].getValue() == board[row][col].getValue()) {
+                        board[row][col - 1].update(board[row][col]);
+                        board[row][col].setZero();
+                    }
+                }
+            }
+        }
+    }
+
+    public void moveDown(){
+        for(int row = size-2; row <= 0; row--){
+            for(int col = 0; col < size; col++){
+                if(board[row][col].getValue() != 0)
+                {
+                    if(board[row][col].getValue() == board[row][col].getValue()) {
+                        board[row+1][col].update(board[row][col]);
+                        board[row][col].setZero();
+                    }
+                }
+            }
+        }
+    }
+
 
     public void moveRight(){
         for( int i = 0; i < size; i++){
