@@ -1,39 +1,11 @@
 package solution.bmp.a2048;
 
 import java.util.Random;
-
 /**
  * Created by gansu on 2/18/2017.
  */
 
 public class Board {
-
-
-    public static void main(String [] args)
-    {
-        Board a = new Board(4);
-        Cell[][] board = a.getBoard();
-        board[0][1].value = 2;
-        board[0][2].value = 2;
-        for(int i = 0; i < 4; i++){
-            for (int j =0; j < 4; j++)
-            {
-                System.out.print(board[i][j].getValue() + " ");
-            }
-            System.out.println();
-        }
-
-        a.moveRight();
-        System.out.println("After move");
-        for(int i = 0; i < 4; i++){
-            for (int j =0; j < 4; j++)
-            {
-                System.out.print(board[i][j].getValue() + " ");
-            }
-            System.out.println();
-        }
-
-    }
 
     Cell[][] board;
     int score;
@@ -73,40 +45,62 @@ public class Board {
 
     }
 
-    public void moveRight(){
-        for( int i = 0; i < size; i++){
-            for(int j = size - 2; j >= 0; j--){
-                skipEmptyCellsRight(i, j);
+    public void moveLeft(){
+        for(int col = 1; col < size; col++) {
+            for (int row = 0; row < size; row++) {
+                if(board[row][col].getValue() != 0)
+                {
+                    if(board[row][col-1].getValue() == board[row][col].getValue()) {
+                        board[row][col - 1].update(board[row][col]);
+                        board[row][col].setZero();
+                    }
+                }
             }
         }
     }
 
-    public int getSize()
-    {
-        return this.size;
-    }
-
-    private void skipEmptyCellsRight(int currentRow, int currentCol)
-    {
-        if(currentCol > size - 1)
-            return;
-        if(board[currentRow][currentCol + 1] != null && board[currentRow][currentCol + 1].getValue() == 0){
-            board[currentRow][currentCol + 1].value = board[currentRow][currentCol].value;
-            board[currentRow][currentCol].setZero();
-            skipEmptyCellsRight(currentRow, currentCol + 1);
+    public void moveDown(){
+        for(int row = size-2; row <= 0; row--){
+            for(int col = 0; col < size; col++){
+                if(board[row][col].getValue() != 0)
+                {
+                    if(board[row][col].getValue() == board[row][col].getValue()) {
+                        board[row+1][col].update(board[row][col]);
+                        board[row][col].setZero();
+                    }
+                }
+            }
         }
     }
 
-    private void mergeCells(Cell fromCell, Cell toCell)
-    {
-        if(fromCell.getValue() == toCell.getValue())
-            toCell.update(fromCell);
-        fromCell.setZero();
+
+    public void moveRight(){
+        for( int i = 0; i < size; i++){
+            for(int j = size - 2; j >= 0; j--){
+                if(board[i][j].getValue() != 0)
+                    moveHelperAcross(i, j, 1);
+            }
+        }
     }
-    public Cell[][] getBoard(){
-        return this.board;
+        }
+    }
+
+    public void moveUp(){
+        for( int i = 0; i < size; i++){
+            for(int j = 1; j < size; j++){
+                if(board[j][i].getValue() != 0)
+                    moveHelperVertical(j, i, -1);
+            }
+        }
+    }
+
+    public void moveDown(){
+        for( int i = 0; i < size; i++){
+            for(int j = size - 2; j >= 0; j--){
+                if(board[j][i].getValue() != 0)
+                    moveHelperVertical(j, i, 1);
+            }
+        }
     }
 
 }
-
-
