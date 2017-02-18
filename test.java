@@ -81,6 +81,8 @@ class Board {
 
     private void skipEmptyCellsRight(int currentRow, int currentCol)
     {
+		if(currentCol > size - 1)
+			return
     	if(board[currentRow][currentCol + 1] != null && board[currentRow][currentCol + 1].getValue() == 0){
     		board[currentRow][currentCol + 1].value = board[currentRow][currentCol].value;
     		board[currentRow][currentCol].setZero();
