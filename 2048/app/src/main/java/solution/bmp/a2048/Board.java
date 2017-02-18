@@ -7,8 +7,6 @@ import java.util.Random;
  */
 
 public class Board {
-
-
     Cell[][] board;
     int score;
     int size;
